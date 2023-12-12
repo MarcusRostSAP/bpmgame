@@ -61,6 +61,4 @@
 		<property name="sessionFactory" ref="annotationSessionFactory" />
 	</bean>
 
-	<import resource="mailSender.xml" /> 
-
 </beans>

@@ -227,7 +227,7 @@ public class DeclarativeStateSpace {
 	private void recomputeShortestPaths() {
 		int nrVertices = states.keySet().size(); 
 		
-		//let dist be a |V| × |V| array of minimum distances initialized to infinity
+		//let dist be aarray of minimum distances initialized to infinity
 		//(we use infinity == nrVertices, because this is the theoretical maximum length of a path between two vertices)
 		pathLengthBetweenStates = new int[nrVertices][];
 		firstTransitionBetweenStates = new String[nrVertices][];

@@ -21,10 +21,10 @@ public class EmailService {
 	
 	public static final String OWN_EMAIL = "info.bpmgame@gmail.com";
 	
-	@Autowired
-	private JavaMailSenderImpl mailSender;
+	//@Autowired
+	//private JavaMailSenderImpl mailSender;
 
-	private static final Logger logger = Logger.getLogger(EmailService.class);
+	//private static final Logger logger = Logger.getLogger(EmailService.class);
 
 	public void sendEmail(Email email){
 	try {
@@ -51,7 +51,7 @@ public class EmailService {
         final String finalAttachmentName = email.getAttachmentName();
         final Resource finalAttachment = email.getAttachment();
 
-		mailSender.send(new MimeMessagePreparator() {
+		/*mailSender.send(new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(new InternetAddress(OWN_EMAIL, email.getFromName()));
@@ -62,9 +62,9 @@ public class EmailService {
 					message.addAttachment(finalAttachmentName, finalAttachment);
 				}
 			}
-		});
+		});*/
 	} catch (Exception e) {
-        logger.error(e);
+        //logger.error(e);
     }
 }
 }

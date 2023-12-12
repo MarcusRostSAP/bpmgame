@@ -23,7 +23,6 @@ import nl.tue.bpmgame.bpmgamegui.dao.GameGroupDAO;
 import nl.tue.bpmgame.bpmgamegui.dao.RoleDAO;
 import nl.tue.bpmgame.bpmgamegui.dao.UserDAO;
 import nl.tue.bpmgame.bpmgamegui.services.ConstantProviderService;
-import nl.tue.bpmgame.bpmgamegui.services.EmailService;
 import nl.tue.bpmgame.bpmgamegui.viewmodels.Email;
 
 @Controller
@@ -35,8 +34,8 @@ public class UserController {
 	private RoleDAO roleDao;
 	@Autowired
 	private GameGroupDAO gameGroupDao;
-	@Autowired
-	private EmailService emailService;
+	//@Autowired
+	//private EmailService emailService;
 	
 	/**
 	 * Displays the registration page (also see the POST version of this method)
@@ -84,7 +83,7 @@ public class UserController {
 				mav.addObject("message", "You are already registered.");
 				return mav;
 			}else{				
-				emailService.sendEmail(Email.registrationEmail(user, request));
+				//emailService.sendEmail(Email.registrationEmail(user, request));
 				mav.addObject("alertType","alert-warning");
 				mav.addObject("message", "You are already registered, but your e-mail has not yet been confirmed. We have resent the request for confirmation.");
 				return mav;				
@@ -106,15 +105,15 @@ public class UserController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(passwordEncoder.encode(password));
 		user.setUid(new BigInteger(130, new SecureRandom()).toString(32)+"_"+Long.toString(id));
-		user.setConfirmed(false);
+		user.setConfirmed(true);
 		user.getRoles().add(r);
 		userDao.update(user);
 
-		emailService.sendEmail(Email.registrationEmail(user, request));
+		//emailService.sendEmail(Email.registrationEmail(user, request));
 
 		mav.addObject("alertType","alert-success");
 		mav.addObject("message", "You are now registered. Please check your e-mail to confirm your account.");
-		return mav;			
+		return mav;
 	}
 
 	/**
@@ -167,7 +166,7 @@ public class UserController {
 			if (user == null){
 				model.addObject("failure", "Invalid e-mail.");				
 			}else if (!user.isConfirmed()){
-				emailService.sendEmail(Email.registrationEmail(user, request));
+				//emailService.sendEmail(Email.registrationEmail(user, request));
 				model.addObject("failure", "You are already registered, but your e-mail address is not yet confirmed. We sent another confirmation request to your e-mail address.");
 			}else{
 				model.addObject("failure", "Invalid password.");
@@ -277,7 +276,7 @@ public class UserController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(passwordEncoder.encode(newPassword));
 		userDao.update(user);
-		emailService.sendEmail(Email.passwordEmail(user, newPassword));
+		//emailService.sendEmail(Email.passwordEmail(user, newPassword));
 
 		mav.addObject("alertType","alert-success");
 		mav.addObject("message", "We sent a new password to your e-mail address.");

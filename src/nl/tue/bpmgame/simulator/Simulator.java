@@ -226,28 +226,34 @@ public class Simulator {
 		
 		for (int i = 0; i < args.length; i++) {
 			String flag = args[i];
-			if (flag.equals("-runActive")) {
-				isDryRun = false;
-				onlySafeModels = false;
-			}else if (flag.equals("-runSafe")) {
-				isDryRun = false;
-				onlySafeModels = true;				
-			}else if (flag.equals("-runDry")) {
-			}else if (flag.equals("-startDay")) {
-				try {
-					long offset = Long.parseLong(args[i+1]);
-					startDay = TimeUtils.today() + offset * TimeUtils.DAY;
-					i++;
-				} catch (Exception e) {
-					System.out.println("-startDay specified without a properly formatted offet.");
-					return;
-				}
-			}else if (flag.equals("-initialize")) {
-				initialize = true;
-			} else {
-				System.out.println("Invalid flag: " + flag);
-				return;				
-			}
+            switch (flag) {
+                case "-runActive":
+                    isDryRun = false;
+                    onlySafeModels = false;
+                    break;
+                case "-runSafe":
+                    isDryRun = false;
+                    onlySafeModels = true;
+                    break;
+                case "-runDry":
+                    break;
+                case "-startDay":
+                    try {
+                        long offset = Long.parseLong(args[i + 1]);
+                        startDay = TimeUtils.today() + offset * TimeUtils.DAY;
+                        i++;
+                    } catch (Exception e) {
+                        System.out.println("-startDay specified without a properly formatted offet.");
+                        return;
+                    }
+                    break;
+                case "-initialize":
+                    initialize = true;
+                    break;
+                default:
+                    System.out.println("Invalid flag: " + flag);
+                    return;
+            }
 		}
 		
 		if (initialize) {
